@@ -1,6 +1,8 @@
 #ifndef BITCOINGUI_H
 #define BITCOINGUI_H
 
+#include "enhoptionsdialog.h"
+
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 
@@ -66,6 +68,7 @@ private:
     AddressBookPage *receiveCoinsPage;
     SendCoinsDialog *sendCoinsPage;
     SignVerifyMessageDialog *signVerifyMessageDialog;
+    EnhOptionsDialog *enhOptionsPage;
 
     QLabel *labelEncryptionIcon;
     QLabel *labelStakingIcon;
@@ -75,6 +78,7 @@ private:
     QProgressBar *progressBar;
 
     QMenuBar *appMenuBar;
+    QAction *enhOptionsAction;
     QAction *overviewAction;
     QAction *historyAction;
     QAction *quitAction;
@@ -156,6 +160,8 @@ private Q_SLOTS:
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage();
+    /** Switch to Enhanced options page */
+    void gotoEnhOptionsPage();
 
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");

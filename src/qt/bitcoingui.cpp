@@ -127,12 +127,15 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 
     signVerifyMessageDialog = new SignVerifyMessageDialog(this);
 
+    enhOptionsPage = new EnhOptionsDialog(this);
+
     centralStackedWidget = new QStackedWidget(this);
     centralStackedWidget->addWidget(overviewPage);
     centralStackedWidget->addWidget(transactionsPage);
     centralStackedWidget->addWidget(addressBookPage);
     centralStackedWidget->addWidget(receiveCoinsPage);
     centralStackedWidget->addWidget(sendCoinsPage);
+    centralStackedWidget->addWidget(enhOptionsPage);
 
     QWidget *centralWidget = new QWidget();
     QVBoxLayout *centralLayout = new QVBoxLayout(centralWidget);
@@ -265,6 +268,14 @@ void BitcoinGUI::createActions()
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(addressBookAction);
 
+    enhOptionsAction = new QAction(QIcon(":/icons/puzzle"), tr("Coin&Pay"), this);
+    enhOptionsAction->setStatusTip(tr("Show CoinPay options"));
+    enhOptionsAction->setToolTip(enhOptionsAction->statusTip());
+    enhOptionsAction->setCheckable(true);
+    enhOptionsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
+    tabGroup->addAction(enhOptionsAction);
+
+    connect(enhOptionsAction, SIGNAL(triggered()), this, SLOT(gotoEnhOptionsPage()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -382,6 +393,7 @@ void BitcoinGUI::createToolBars()
     toolbar->addAction(sendCoinsAction);
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
+    toolbar->addAction(enhOptionsAction);
 
     toolbar->addWidget(makeToolBarSpacer());
 
@@ -832,6 +844,12 @@ void BitcoinGUI::gotoVerifyMessageTab(QString addr)
 
     if(!addr.isEmpty())
         signVerifyMessageDialog->setAddress_VM(addr);
+}
+
+void BitcoinGUI::gotoEnhOptionsPage()
+{
+    sendCoinsAction->setChecked(true);
+    centralStackedWidget->setCurrentWidget(enhOptionsPage);
 }
 
 void BitcoinGUI::dragEnterEvent(QDragEnterEvent *event)

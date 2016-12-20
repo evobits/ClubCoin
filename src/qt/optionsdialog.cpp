@@ -5,11 +5,25 @@
 #include "monitoreddatamapper.h"
 #include "netbase.h"
 #include "optionsmodel.h"
+#include "base58.h"
+#include "init.h"
 
+#include <boost/algorithm/string/join.hpp>
+
+#include <QApplication>
 #include <QDir>
+#include <QFile>
 #include <QIntValidator>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
 #include <QLocale>
 #include <QMessageBox>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QUrl>
+#include <QUrlQuery>
 
 OptionsDialog::OptionsDialog(QWidget *parent) :
     QDialog(parent),
